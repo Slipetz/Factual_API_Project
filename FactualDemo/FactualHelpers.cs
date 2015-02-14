@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace FactualDemo
+namespace FactualAPIProject1
 {
     static class FactualHelpers
     {
@@ -23,7 +20,7 @@ namespace FactualDemo
             listWriter.Close();
         }
 
-        public static void WriteJsonToFile(FactualJson inMemoryDB, string path)
+        public static void WriteDBToFile(FactualJson inMemoryDB, string path)
         {
             StreamWriter jsonSaver = new StreamWriter(path);
             inMemoryDB.response.included_rows = inMemoryDB.response.data.Count();
@@ -74,10 +71,46 @@ namespace FactualDemo
 
         public static FactualJson GetInMemoryFile()
         {
-            StreamReader fileLoader = new StreamReader("FactualData.txt");
-            string jsonFile = fileLoader.ReadToEnd();
-            fileLoader.Close();
-            return JsonConvert.DeserializeObject<FactualJson>(jsonFile);
+            if (File.Exists("FactualData.txt"))
+            {
+                StreamReader fileLoader = new StreamReader("FactualData.txt");
+                string jsonFile = fileLoader.ReadToEnd();
+                fileLoader.Close();
+                return JsonConvert.DeserializeObject<FactualJson>(jsonFile);
+            }
+            else
+                return new FactualJson();
+        }
+
+        public static void WriteJSONToFile(string fileName, string factualInfo)
+        {
+            var fileSaver = new StreamWriter(fileName);
+            fileSaver.WriteLine(factualInfo);
+            fileSaver.Close();
+        }
+
+        public static FactualPoint[] ParseJsonData(FactualJson inMemoryDb, FactualJson factualData)
+        {
+            var newPoints = new List<FactualPoint>(inMemoryDb.response.data);
+            //If we already have an inMemoryDB, then we replace this stuff with the new data
+            foreach (var data in factualData.response.data)
+            {
+                //Check to see if we can compare the factual ID and see if any of them match
+                if ((FindEquals("factual_id", data.factual_id, inMemoryDb).Any()))
+                {
+                    for (int i = 0; i < inMemoryDb.response.data.Count(); i++)
+                    {
+                        if (inMemoryDb.response.data[i].factual_id.Equals(data.factual_id))
+                            inMemoryDb.response.data[i] = data;
+                    }
+                }
+                else
+                {
+                    newPoints.Add(data);
+                }
+            }
+            //Re-attach the above list back into the data dump/inMemoryDB
+            return newPoints.ToArray();
         }
     }
 }

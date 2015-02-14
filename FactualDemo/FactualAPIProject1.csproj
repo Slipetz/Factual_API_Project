@@ -7,8 +7,8 @@
     <ProjectGuid>{AAE97669-67C5-4819-B930-21B2CD1BFE7A}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FactualDemo</RootNamespace>
-    <AssemblyName>FactualDemo</AssemblyName>
+    <RootNamespace>FactualAPIProject1</RootNamespace>
+    <AssemblyName>FactualAPIProject1</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
