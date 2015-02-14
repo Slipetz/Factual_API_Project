@@ -138,6 +138,9 @@ namespace FactualAPIProject1
                     }
                 }
                 Console.WriteLine("Offline with In-Memory Database Loaded. Testing Commencing");
+                Console.WriteLine();
+                Console.WriteLine("Writing In-Memory DB Copy");
+                FactualHelpers.WriteDBToFile(inMemoryDb, "FactualData.txt");
             }
 
             Console.WriteLine("*************************************************");
