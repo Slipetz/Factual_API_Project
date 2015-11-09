@@ -7,8 +7,8 @@ namespace FactualAPIProject1
 {
     static class FactualHelpers
     {
-        public const string FactualKey = "tdyOQ7pUNeM1PkncC4pvZJfC2zx7e88t9hRVyuDC";
-        public const string FactualSecret = "pE3mk8u7DceJ4wTyKyH4celwOATuGLw8MEeKGrCz";
+        public const string FactualKey = ;
+        public const string FactualSecret = ;
 
         public static void WriteListToFile(List<string> fileList, string path)
         {
